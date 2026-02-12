@@ -1,0 +1,34 @@
+description = "🚀 Phase 1: Kickoff dự án — PO phân tích ý tưởng, tạo Vision và Product Backlog"
+
+prompt = """
+Hãy gọi PO Agent (po-agent) để KICKOFF dự án.
+
+## Ý tưởng dự án từ User:
+{{args}}
+
+## Ngữ cảnh quy trình:
+@{docs/SCRUM-SUBAGENTS.md}
+
+## Nhiệm vụ Phase 1 — Kickoff:
+Bạn đang ở **Phase 1 (Kickoff)**. Nhiệm vụ:
+
+1. **Phân tích ý tưởng** thành các User Stories chi tiết:
+   - Format: AS A [vai trò] I WANT [tính năng] SO THAT [giá trị]
+   - Mỗi story có Acceptance Criteria: GIVEN...WHEN...THEN
+
+2. **Tạo `docs/VISION.md`**:
+   - Tầm nhìn sản phẩm, đối tượng người dùng
+   - Mục tiêu chính, phạm vi MVP
+
+3. **Tạo `docs/PRODUCT_BACKLOG.md`**:
+   - Danh sách User Stories với ID, mô tả, AC
+   - Ưu tiên: P0-Critical, P1-High, P2-Medium, P3-Low
+   - Story Points ước lượng
+
+4. **Báo cáo cho User**: Tóm tắt output, đề xuất priority và chờ User approve trước khi sang Phase 2.
+
+## Quy tắc:
+- Viết bằng tiếng Việt
+- Lưu tất cả vào `docs/`
+- KHÔNG được nhảy sang thiết kế kiến trúc — đó là việc của Phase 2
+"""

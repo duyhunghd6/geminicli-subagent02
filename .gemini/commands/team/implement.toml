@@ -1,0 +1,66 @@
+description = "🏗️ Phase 3: Implement — Sprint Planning + Dev + QA tự phối hợp, viết handoff khi hết turns"
+
+prompt = """
+Bắt đầu Sprint Implementation cho dự án.
+
+## Yêu cầu từ Orchestrator:
+{{args}}
+
+## Ngữ cảnh quy trình:
+@{docs/SCRUM-SUBAGENTS.md}
+
+## Input bắt buộc (đã có từ Phase 1 & 2):
+Đọc các tài liệu sau trước khi bắt đầu:
+- `docs/VISION.md` — Tầm nhìn sản phẩm
+- `docs/PRODUCT_BACKLOG.md` — User Stories + AC
+- `docs/ARCHITECTURE.md` — Kiến trúc đã duyệt
+- `docs/IMPLEMENTATION_PLAN.md` — Kế hoạch triển khai
+
+## Quy trình Implementation (trong 1 phiên):
+
+### Bước 1 — Sprint Planning
+- Chọn User Stories từ Backlog cho Sprint này
+- Task breakdown cụ thể
+- Xác định test plan
+
+### Bước 2 — Development
+- Implement theo Tech Specs và Architecture đã duyệt
+- Viết unit tests cho mỗi function/component
+- Chạy linter + tests
+
+### Bước 3 — Quality Assurance
+- Viết test cases dựa trên Acceptance Criteria
+- Chạy tests (happy path + edge cases + negative)
+- Nếu có bugs → fix ngay → regression test
+
+## ⚠️ QUY TẮC HANDOFF BẮT BUỘC:
+
+Mỗi agent có **tối đa 15 turns**. Khi gần hết turns hoặc hoàn thành:
+
+**PHẢI viết file `docs/HANDOFF.md`** với nội dung:
+```
+# Handoff Report — [Ngày]
+
+## ✅ Đã hoàn thành
+- [Liệt kê tasks đã xong]
+
+## 🔄 Đang dở (chưa xong)
+- [Liệt kê tasks chưa xong, mô tả trạng thái hiện tại]
+
+## 📋 Issues cần tạo (cho Sprint sau)
+- ISSUE-xxx: [Mô tả issue cần bỏ vào Backlog]
+
+## 🎯 Đề xuất bước tiếp
+- [Agent nào cần được gọi tiếp và làm gì]
+
+## 📝 Bài học rút ra (Retrospective)
+- [Điều gì hiệu quả, điều gì cần cải thiện]
+```
+
+**KHÔNG ĐƯỢC** kết thúc mà không viết Handoff. Orchestrator cần Handoff để tạo Issues và lên kế hoạch Sprint sau.
+
+## Quy tắc:
+- Phase 2 phải đã được User approve
+- Viết bằng tiếng Việt, lưu vào `docs/`
+- Cập nhật `docs/PRODUCT_BACKLOG.md` khi Stories done/in-progress
+"""

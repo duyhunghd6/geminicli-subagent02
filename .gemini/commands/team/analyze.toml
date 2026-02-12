@@ -1,0 +1,44 @@
+description = "🧠 Phase 2: Phân tích & Kiến trúc — SA thiết kế hệ thống, tech stack, kế hoạch triển khai"
+
+prompt = """
+Hãy gọi SA Agent (sa-agent) để thực hiện Phase 2: Analysis & Architecture.
+
+## Yêu cầu bổ sung từ User:
+{{args}}
+
+## Ngữ cảnh quy trình:
+@{docs/SCRUM-SUBAGENTS.md}
+
+## Input bắt buộc (đã có từ Phase 1):
+Đọc các tài liệu sau trước khi bắt đầu:
+- `docs/VISION.md` — Tầm nhìn sản phẩm
+- `docs/PRODUCT_BACKLOG.md` — Danh sách User Stories + AC
+
+## Nhiệm vụ Phase 2 — Analysis & Architecture:
+Bạn đang ở **Phase 2 (Analysis)**. Nhiệm vụ:
+
+1. **Tạo `docs/ARCHITECTURE.md`**:
+   - Kiến trúc hệ thống tổng quan (có sơ đồ Mermaid)
+   - Các layers, components và cách tương tác
+   - Design patterns sẽ sử dụng
+
+2. **Tạo `docs/TECH_STACK.md`**:
+   - ADR (Architecture Decision Records)
+   - So sánh ưu/nhược điểm các lựa chọn tech
+   - Database schema design (ERD nếu cần)
+   - API endpoints design
+
+3. **Tạo `docs/IMPLEMENTATION_PLAN.md`**:
+   - Chia Backlog thành các Sprint (mỗi Sprint 3-5 Stories)
+   - Task breakdown cho Dev Agent
+   - Dependencies giữa các tasks
+   - Risk assessment
+
+4. **Báo cáo cho User**: Tóm tắt architecture decisions, đề xuất Sprint plan, chờ User approve trước khi bắt đầu code.
+
+## Quy tắc:
+- Viết bằng tiếng Việt
+- Lưu tất cả vào `docs/`
+- KHÔNG được viết code — đó là việc của Phase 3
+- Phase 1 (Vision + Backlog) phải đã được User approve
+"""

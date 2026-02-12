@@ -1,0 +1,15 @@
+# Invoked via: /git:commit
+# Generates a Conventional Commit message from staged changes.
+
+description = "Generates a Git commit message based on staged changes."
+
+prompt = """
+Please generate a Conventional Commit message based on the following git diff.
+Use the format: <type>(<scope>): <description>
+
+Types: feat, fix, docs, style, refactor, test, chore
+
+```diff
+!{git diff --staged}
+```
+"""

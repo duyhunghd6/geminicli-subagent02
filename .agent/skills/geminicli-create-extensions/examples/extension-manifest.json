@@ -1,0 +1,24 @@
+{
+  "name": "my-awesome-extension",
+  "version": "1.0.0",
+  "description": "A complete Gemini CLI extension template with MCP server, commands, hooks, skills, and agents.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "my-server": {
+      "command": "node",
+      "args": ["${extensionPath}${/}dist${/}server.js"],
+      "cwd": "${extensionPath}"
+    }
+  },
+  "excludeTools": [
+    "run_shell_command(rm -rf *)"
+  ],
+  "settings": [
+    {
+      "name": "API Key",
+      "description": "Your API key for the external service.",
+      "envVar": "MY_EXTENSION_API_KEY",
+      "sensitive": true
+    }
+  ]
+}
