@@ -1,20 +1,30 @@
-# Handoff Report — Phase 1: KICKOFF
+# Handoff Report — 2026-02-13
 
 ## ✅ Đã hoàn thành
-- Phân tích yêu cầu từ `example-01/YEU-CAU.md` về hệ thống so sánh LOB Binance vs MEXC.
-- Định nghĩa Tầm nhìn sản phẩm và Phạm vi MVP tại `docs/VISION.md`.
-- Phân rã Product Backlog thành 7 User Stories chi tiết với AC và độ ưu tiên tại `docs/PRODUCT_BACKLOG.md`.
+- Khởi tạo dự án Node.js với ES Modules và cấu trúc thư mục chuẩn.
+- Cài đặt các dependencies quan trọng: `better-sqlite3`, `protobufjs`, `axios`, `ws`, `pino`, `jest`.
+- Triển khai `ExchangeManager` (Base class) với logic duy trì Order Book và sắp xếp snapshot.
+- Triển khai `BinanceManager`: Hỗ trợ REST Snapshot và WebSocket Diff Stream (JSON).
+- Triển khai `MEXCManager`: Hỗ trợ REST Snapshot và WebSocket Protobuf Stream.
+- Định nghĩa file `mexc.proto` để giải mã dữ liệu nhị phân từ MEXC.
+- Triển khai `src/storage/database.js` khởi tạo schema SQLite (3 bảng: snapshots, levels, comparisons).
+- Viết và chạy thành công Unit Test cho `ExchangeManager`.
+- Cập nhật `PRODUCT_BACKLOG.md`: BI-001, BI-002, BI-003 đã hoàn thành (DONE).
 
 ## 🔄 Đang dở (chưa xong)
-- Không có. Phase 1 đã hoàn tất về mặt tài liệu nghiệp vụ.
+- `SnapshotEngine`: Chưa triển khai logic chụp ảnh Order Book định kỳ 1s và lưu vào DB.
+- `DataNormalizer`: Chưa tách riêng module chuẩn hóa dữ liệu trước khi lưu.
 
 ## 📋 Issues cần tạo (cho Sprint sau)
-- Toàn bộ 7 User Stories trong Backlog cần được xem xét để đưa vào kế hoạch thực hiện sau khi có thiết kế kỹ thuật.
+- ISSUE-001: Triển khai `SnapshotEngine` để lưu dữ liệu vào SQLite mỗi giây (Sprint 2).
+- ISSUE-002: Xây dựng `ComparisonEngine` để tính toán Spread và Arbitrage signals (Sprint 3).
+- ISSUE-003: Triển khai cơ chế Reconnect tự động với Exponential Backoff.
 
 ## 🎯 Đề xuất bước tiếp
-- Chuyển sang **Phase 2: ANALYZE**.
-- Gọi **SA Agent (sa-agent)** để thiết kế kiến trúc kỹ thuật (`ARCHITECTURE.md`) và kế hoạch triển khai (`IMPLEMENTATION_PLAN.md`) dựa trên Vision và Backlog đã có.
+- Gọi **Dev Agent** để thực hiện Sprint 2: Tập trung vào `SnapshotEngine` và `Database Writer`.
+- Gọi **QA Agent** để kiểm thử việc lưu trữ dữ liệu vào SQLite.
 
 ## 📝 Bài học rút ra (Retrospective)
-- PO Agent cần được kiểm soát chặt chẽ hơn về ngữ cảnh để tránh tạo nội dung lạc đề.
-- Việc Orchestrator trực tiếp can thiệp giúp đảm bảo chất lượng tài liệu đầu ra đúng với yêu cầu kỹ thuật phức tạp (Protobuf, LOB management).
+- Việc sử dụng `Map` trong `ExchangeManager` giúp việc cập nhật và xóa price level đạt hiệu suất O(1).
+- Việc buffer dữ liệu WebSocket trong khi chờ REST Snapshot giúp đảm bảo không bị mất gap dữ liệu ngay khi khởi động.
+- Protobuf của MEXC cần được handle cẩn thận về kiểu dữ liệu (String vs Float).

@@ -1,34 +1,39 @@
-description = "🚀 Phase 1: Kickoff dự án — PO phân tích ý tưởng, tạo Vision và Product Backlog"
+description = "🚀 Phase 1: Kickoff — Spawn PO Agent phân tích ý tưởng → Vision + Backlog"
 
 prompt = """
-Hãy gọi PO Agent (po-agent) để KICKOFF dự án.
+Bạn là Orchestrator. Thực hiện Phase 1: KICKOFF.
 
-## Ý tưởng dự án từ User:
+## Ý tưởng dự án:
 {{args}}
 
-## Ngữ cảnh quy trình:
-@{docs/SCRUM-SUBAGENTS.md}
+## Hành động — SPAWN SUBAGENT:
 
-## Nhiệm vụ Phase 1 — Kickoff:
-Bạn đang ở **Phase 1 (Kickoff)**. Nhiệm vụ:
+### Bước 1: Spawn PO Agent
+Gọi tool **po-agent** với query:
+"Phân tích ý tưởng dự án sau và tạo tài liệu Product:
 
-1. **Phân tích ý tưởng** thành các User Stories chi tiết:
-   - Format: AS A [vai trò] I WANT [tính năng] SO THAT [giá trị]
-   - Mỗi story có Acceptance Criteria: GIVEN...WHEN...THEN
+Ý tưởng: {{args}}
 
-2. **Tạo `docs/VISION.md`**:
-   - Tầm nhìn sản phẩm, đối tượng người dùng
-   - Mục tiêu chính, phạm vi MVP
+Nhiệm vụ:
+1. Tạo `docs/VISION.md` — tầm nhìn sản phẩm, đối tượng, phạm vi MVP
+2. Tạo `docs/PRODUCT_BACKLOG.md` — User Stories (AS A/I WANT/SO THAT) với AC (GIVEN/WHEN/THEN), ưu tiên P0-P3, Story Points
+3. Viết `docs/HANDOFF.md` theo template Handoff khi hoàn thành
 
-3. **Tạo `docs/PRODUCT_BACKLOG.md`**:
-   - Danh sách User Stories với ID, mô tả, AC
-   - Ưu tiên: P0-Critical, P1-High, P2-Medium, P3-Low
-   - Story Points ước lượng
+Viết tất cả bằng tiếng Việt. KHÔNG thiết kế kiến trúc — đó là Phase 2."
 
-4. **Báo cáo cho User**: Tóm tắt output, đề xuất priority và chờ User approve trước khi sang Phase 2.
+### Bước 2: Xử lý kết quả
+- Đọc `docs/HANDOFF.md` để kiểm tra kết quả
+- Tóm tắt cho User: những gì PO đã tạo, đề xuất approve để sang Phase 2
+- Nếu PO chưa xong → liệt kê Issues cần bổ sung
+
+### Bước 3: Git Commit
+Sau khi hoàn tất, chạy lệnh shell:
+```
+git add -A && git commit -m "phase1(kickoff): PO tạo Vision + Product Backlog"
+```
 
 ## Quy tắc:
+- PHẢI spawn po-agent, KHÔNG tự làm
+- PHẢI git commit khi hoàn thành workflow
 - Viết bằng tiếng Việt
-- Lưu tất cả vào `docs/`
-- KHÔNG được nhảy sang thiết kế kiến trúc — đó là việc của Phase 2
 """

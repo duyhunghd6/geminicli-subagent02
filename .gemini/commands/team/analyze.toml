@@ -1,44 +1,60 @@
-description = "🧠 Phase 2: Phân tích & Kiến trúc — SA thiết kế hệ thống, tech stack, kế hoạch triển khai"
+description = "🧠 Phase 2: Analyze — Spawn SA thiết kế → QA review chất lượng → SA bổ sung nếu cần"
 
 prompt = """
-Hãy gọi SA Agent (sa-agent) để thực hiện Phase 2: Analysis & Architecture.
+Bạn là Orchestrator. Thực hiện Phase 2: ANALYSIS & ARCHITECTURE.
 
 ## Yêu cầu bổ sung từ User:
 {{args}}
 
-## Ngữ cảnh quy trình:
-@{docs/SCRUM-SUBAGENTS.md}
+## Điều kiện tiên quyết:
+Phase 1 phải đã hoàn thành. Kiểm tra tồn tại: `docs/VISION.md` và `docs/PRODUCT_BACKLOG.md`.
 
-## Input bắt buộc (đã có từ Phase 1):
-Đọc các tài liệu sau trước khi bắt đầu:
-- `docs/VISION.md` — Tầm nhìn sản phẩm
-- `docs/PRODUCT_BACKLOG.md` — Danh sách User Stories + AC
+## Hành động — SPAWN SUBAGENTS TUẦN TỰ:
 
-## Nhiệm vụ Phase 2 — Analysis & Architecture:
-Bạn đang ở **Phase 2 (Analysis)**. Nhiệm vụ:
+### Bước 1: Spawn SA Agent
+Gọi tool **sa-agent** với query:
+"Đọc `docs/VISION.md` và `docs/PRODUCT_BACKLOG.md`, sau đó thiết kế hệ thống:
 
-1. **Tạo `docs/ARCHITECTURE.md`**:
-   - Kiến trúc hệ thống tổng quan (có sơ đồ Mermaid)
-   - Các layers, components và cách tương tác
-   - Design patterns sẽ sử dụng
+1. Tạo `docs/ARCHITECTURE.md` — kiến trúc tổng quan với sơ đồ Mermaid, layers, components, patterns
+2. Tạo `docs/TECH_STACK.md` — ADR, so sánh tech, database schema, API design
+3. Tạo `docs/IMPLEMENTATION_PLAN.md` — chia Sprint, task breakdown, dependencies, risk assessment
+4. Viết `docs/HANDOFF.md` theo template Handoff khi hoàn thành
 
-2. **Tạo `docs/TECH_STACK.md`**:
-   - ADR (Architecture Decision Records)
-   - So sánh ưu/nhược điểm các lựa chọn tech
-   - Database schema design (ERD nếu cần)
-   - API endpoints design
+Viết bằng tiếng Việt. KHÔNG viết code — chỉ thiết kế."
 
-3. **Tạo `docs/IMPLEMENTATION_PLAN.md`**:
-   - Chia Backlog thành các Sprint (mỗi Sprint 3-5 Stories)
-   - Task breakdown cho Dev Agent
-   - Dependencies giữa các tasks
-   - Risk assessment
+### Bước 2: Spawn QA Agent (Review chất lượng tài liệu)
+Sau khi SA Agent trả về, gọi tool **qa-agent** với query:
+"Review chất lượng các tài liệu phân tích vừa được SA tạo:
 
-4. **Báo cáo cho User**: Tóm tắt architecture decisions, đề xuất Sprint plan, chờ User approve trước khi bắt đầu code.
+Đọc và đánh giá:
+- `docs/ARCHITECTURE.md` — kiến trúc có rõ ràng, đầy đủ components, có sơ đồ?
+- `docs/TECH_STACK.md` — ADR có hợp lý, có so sánh alternatives?
+- `docs/IMPLEMENTATION_PLAN.md` — Sprint plan có khả thi, task breakdown có đủ chi tiết?
+
+Viết `docs/QA_REVIEW.md` với:
+## Đánh giá chất lượng tài liệu
+## ✅ Đạt yêu cầu
+## ⚠️ Cần bổ sung / sửa chữa
+## 🔴 Issues nghiêm trọng
+
+Viết bằng tiếng Việt."
+
+### Bước 3: Nếu QA phát hiện issues nghiêm trọng
+Đọc `docs/QA_REVIEW.md`. Nếu có mục "🔴 Issues nghiêm trọng", spawn lại **sa-agent** với query:
+"Đọc `docs/QA_REVIEW.md` và sửa lại các tài liệu theo feedback của QA. Cập nhật HANDOFF.md."
+
+### Bước 4: Git Commit
+Sau khi hoàn tất, chạy lệnh shell:
+```
+git add -A && git commit -m "phase2(analyze): SA thiết kế Architecture + Plan, QA reviewed"
+```
+
+## Sau khi hoàn tất:
+- Tóm tắt cho User: Architecture decisions, Sprint plan, kết quả QA review
+- Đề xuất approve để sang Phase 3 (Implement)
 
 ## Quy tắc:
+- PHẢI spawn sa-agent rồi qa-agent, KHÔNG tự làm
+- PHẢI git commit khi hoàn thành workflow
 - Viết bằng tiếng Việt
-- Lưu tất cả vào `docs/`
-- KHÔNG được viết code — đó là việc của Phase 3
-- Phase 1 (Vision + Backlog) phải đã được User approve
 """

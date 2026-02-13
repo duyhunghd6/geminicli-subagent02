@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message DepthLevel {
+    string price = 1;
+    string quantity = 2;
+}
+
+message PublicIncreaseDepths {
+    repeated DepthLevel asksList = 1;
+    repeated DepthLevel bidsList = 2;
+    string eventtype = 3;
+    string fromVersion = 4;
+    string toVersion = 5;
+}
+
+message PushDataV3ApiWrapper {
+    string channel = 1;
+    string symbol = 2;
+    int64 sendtime = 3;
+    optional PublicIncreaseDepths publicincreasedepths = 4;
+}

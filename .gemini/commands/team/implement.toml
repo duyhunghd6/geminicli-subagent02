@@ -1,66 +1,92 @@
-description = "🏗️ Phase 3: Implement — Sprint Planning + Dev + QA tự phối hợp, viết handoff khi hết turns"
+description = "🏗️ Phase 3: Implement — Spawn 2 Dev agents song song + QA, git commit khi xong"
 
 prompt = """
-Bắt đầu Sprint Implementation cho dự án.
+Bạn là Orchestrator. Thực hiện Phase 3: SPRINT IMPLEMENTATION.
 
-## Yêu cầu từ Orchestrator:
+## Sprint tasks từ User:
 {{args}}
 
-## Ngữ cảnh quy trình:
-@{docs/SCRUM-SUBAGENTS.md}
+## Điều kiện tiên quyết:
+Phase 2 phải đã hoàn thành. Kiểm tra tồn tại: `docs/ARCHITECTURE.md` và `docs/IMPLEMENTATION_PLAN.md`.
 
-## Input bắt buộc (đã có từ Phase 1 & 2):
-Đọc các tài liệu sau trước khi bắt đầu:
-- `docs/VISION.md` — Tầm nhìn sản phẩm
-- `docs/PRODUCT_BACKLOG.md` — User Stories + AC
-- `docs/ARCHITECTURE.md` — Kiến trúc đã duyệt
-- `docs/IMPLEMENTATION_PLAN.md` — Kế hoạch triển khai
+## Hành động — SPRINT EXECUTION:
 
-## Quy trình Implementation (trong 1 phiên):
+### Bước 1: Sprint Planning (Orchestrator tự làm)
+- Đọc `docs/PRODUCT_BACKLOG.md` và `docs/IMPLEMENTATION_PLAN.md`
+- Xác định tasks cụ thể cho Sprint dựa trên: {{args}}
+- **QUAN TRỌNG**: Mỗi dev-agent có tối đa 15 turns. Mỗi turn implement được ~1 function/component + unit test.
+  → Chọn **tối đa 2-3 tasks cho mỗi dev-agent** (tổng 4-6 tasks/Sprint).
+- Chia tasks thành 2 nhóm KHÔNG phụ thuộc nhau (có thể chạy song song).
+- Viết sprint plan vào `docs/SPRINT_PLAN.md`
 
-### Bước 1 — Sprint Planning
-- Chọn User Stories từ Backlog cho Sprint này
-- Task breakdown cụ thể
-- Xác định test plan
+### Bước 2: Spawn 2 Dev Agents SONG SONG
+Gọi **đồng thời** 2 tool dev-agent:
 
-### Bước 2 — Development
-- Implement theo Tech Specs và Architecture đã duyệt
-- Viết unit tests cho mỗi function/component
-- Chạy linter + tests
+**Dev Agent 1** — query:
+"Đọc `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/PRODUCT_BACKLOG.md`.
 
-### Bước 3 — Quality Assurance
-- Viết test cases dựa trên Acceptance Criteria
-- Chạy tests (happy path + edge cases + negative)
-- Nếu có bugs → fix ngay → regression test
+Sprint tasks cho bạn (Nhóm 1): [LIỆT KÊ 2-3 TASKS TỪ SPRINT PLAN — NHÓM 1]
 
-## ⚠️ QUY TẮC HANDOFF BẮT BUỘC:
+Quy tắc DONE:
+- Code PHẢI có unit tests cho mỗi function/component
+- Chạy build: `npm run build` hoặc tương đương — PHẢI pass
+- Chạy tests: `npm test` — PHẢI pass
+- Nếu build/test fail → fix ngay, KHÔNG được handoff khi tests đang fail
+- Viết `docs/HANDOFF_DEV1.md` theo template Handoff
 
-Mỗi agent có **tối đa 15 turns**. Khi gần hết turns hoặc hoàn thành:
+Code comments tiếng Anh, tài liệu tiếng Việt."
 
-**PHẢI viết file `docs/HANDOFF.md`** với nội dung:
+**Dev Agent 2** — query:
+"Đọc `docs/ARCHITECTURE.md`, `docs/IMPLEMENTATION_PLAN.md`, `docs/PRODUCT_BACKLOG.md`.
+
+Sprint tasks cho bạn (Nhóm 2): [LIỆT KÊ 2-3 TASKS TỪ SPRINT PLAN — NHÓM 2]
+
+Quy tắc DONE:
+- Code PHẢI có unit tests cho mỗi function/component
+- Chạy build: `npm run build` hoặc tương đương — PHẢI pass
+- Chạy tests: `npm test` — PHẢI pass
+- Nếu build/test fail → fix ngay, KHÔNG được handoff khi tests đang fail
+- Viết `docs/HANDOFF_DEV2.md` theo template Handoff
+
+Code comments tiếng Anh, tài liệu tiếng Việt."
+
+### Bước 3: Spawn QA Agent
+Sau khi CẢ 2 Dev Agents trả về, gọi tool **qa-agent** với query:
+"2 Dev Agents vừa implement Sprint tasks. Kiểm tra chất lượng toàn bộ code:
+
+Đọc:
+- `docs/HANDOFF_DEV1.md` và `docs/HANDOFF_DEV2.md` — xem Dev đã hoàn thành gì
+- `docs/PRODUCT_BACKLOG.md` — Acceptance Criteria
+- Source code vừa tạo/sửa
+
+Nhiệm vụ:
+1. Chạy toàn bộ test suite: `npm test`
+2. Kiểm tra integration giữa code của 2 Dev (có conflict không?)
+3. Test theo Acceptance Criteria: happy path, edge cases, negative tests
+4. Nếu có bugs → viết `docs/BUG_REPORT.md` (Steps to Reproduce, Expected vs Actual, Severity)
+5. Viết `docs/HANDOFF_QA.md` theo template Handoff
+
+Viết bằng tiếng Việt."
+
+### Bước 4: Fix Bugs (nếu có)
+Nếu QA báo bugs trong `docs/BUG_REPORT.md`, spawn **dev-agent** với query:
+"Đọc `docs/BUG_REPORT.md` và fix tất cả bugs. Chạy `npm test` — PHẢI pass. Cập nhật `docs/HANDOFF_DEV1.md`."
+
+### Bước 5: Git Commit
+Sau khi tất cả tests pass, chạy lệnh shell:
 ```
-# Handoff Report — [Ngày]
-
-## ✅ Đã hoàn thành
-- [Liệt kê tasks đã xong]
-
-## 🔄 Đang dở (chưa xong)
-- [Liệt kê tasks chưa xong, mô tả trạng thái hiện tại]
-
-## 📋 Issues cần tạo (cho Sprint sau)
-- ISSUE-xxx: [Mô tả issue cần bỏ vào Backlog]
-
-## 🎯 Đề xuất bước tiếp
-- [Agent nào cần được gọi tiếp và làm gì]
-
-## 📝 Bài học rút ra (Retrospective)
-- [Điều gì hiệu quả, điều gì cần cải thiện]
+git add -A && git commit -m "phase3(sprint): [TÓM TẮT TASKS ĐÃ IMPLEMENT] — tests passed"
 ```
 
-**KHÔNG ĐƯỢC** kết thúc mà không viết Handoff. Orchestrator cần Handoff để tạo Issues và lên kế hoạch Sprint sau.
+## Sau khi hoàn tất:
+- Đọc tất cả Handoff files (DEV1, DEV2, QA)
+- Tóm tắt: tasks đã xong, test results, bugs fixed, items chuyển Sprint sau
+- Cập nhật trạng thái Stories trong `docs/PRODUCT_BACKLOG.md` (Done/In-Progress)
+- Nếu có items chưa xong → tạo Issues vào Backlog cho Sprint sau
 
 ## Quy tắc:
-- Phase 2 phải đã được User approve
-- Viết bằng tiếng Việt, lưu vào `docs/`
-- Cập nhật `docs/PRODUCT_BACKLOG.md` khi Stories done/in-progress
+- PHẢI spawn 2 dev-agent SONG SONG, KHÔNG tự viết code
+- Dev Agent chỉ được coi là DONE khi: unit tests viết xong + build pass + tests pass
+- PHẢI git commit khi hoàn thành workflow
+- Orchestrator chọn số lượng tasks phù hợp (2-3 tasks/agent, tổng 4-6 tasks/sprint)
 """
