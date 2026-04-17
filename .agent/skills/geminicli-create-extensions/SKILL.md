@@ -66,6 +66,44 @@ Read the appropriate rule file before creating each type:
 | Agent Skill    | `rules/skills.md`     | `SKILL.md` with YAML frontmatter              |
 | Extension      | `rules/extensions.md` | `gemini-extension.json` manifest              |
 
+## Documentation Reference Directory
+
+The `reference/` directory contains comprehensive, up-to-date documentation cloned from the Gemini CLI project. Use these specific `.md` files to find technical context and details when building extensions or handling user requests:
+
+### Root Files
+- `CONTRIBUTING.md`, `faq.md`, `index.md`, `integration-tests.md`, `issue-and-pr-automation.md`, `local-development.md`, `npm.md`, `quota-and-pricing.md`, `release-confidence.md`, `releases.md`, `tos-privacy.md`, `troubleshooting.md`
+
+### reference/admin/
+- `enterprise-controls.md`
+
+### reference/changelogs/
+- `index.md`, `latest.md`, `preview.md`
+
+### reference/cli/
+- `acp-mode.md`, `checkpointing.md`, `cli-reference.md`, `creating-skills.md`, `custom-commands.md`, `enterprise.md`, `gemini-ignore.md`, `gemini-md.md`, `generation-settings.md`, `git-worktrees.md`, `headless.md`, `model-routing.md`, `model-steering.md`, `model.md`, `notifications.md`, `plan-mode.md`, `rewind.md`, `sandbox.md`, `session-management.md`, `settings.md`, `skills.md`, `system-prompt.md`, `telemetry.md`, `themes.md`, `token-caching.md`, `trusted-folders.md`
+- **tutorials/**: `automation.md`, `file-management.md`, `mcp-setup.md`, `memory-management.md`, `plan-mode-steering.md`, `session-management.md`, `shell-commands.md`, `skills-getting-started.md`, `task-planning.md`, `web-tools.md`
+
+### reference/core/
+- `index.md`, `local-model-routing.md`, `remote-agents.md`, `subagents.md`
+
+### reference/examples/
+- `proxy-script.md`
+
+### reference/extensions/
+- `best-practices.md`, `index.md`, `reference.md`, `releasing.md`
+
+### reference/get-started/
+- `authentication.md`, `gemini-3.md`, `index.md`, `installation.md`
+
+### reference/hooks/
+- `best-practices.md`, `index.md`, `reference.md`, `writing-hooks.md`
+
+### reference/ide-integration/
+- `ide-companion-spec.md`, `index.md`
+
+### reference/tools/
+- `activate-skill.md`, `ask-user.md`, `file-system.md`, `internal-docs.md`, `mcp-resources.md`, `mcp-server.md`, `memory.md`, `planning.md`, `shell.md`, `todos.md`, `web-fetch.md`, `web-search.md`
+
 ## Examples
 
 Ready-to-use examples are in the `examples/` directory. Copy and modify them.
